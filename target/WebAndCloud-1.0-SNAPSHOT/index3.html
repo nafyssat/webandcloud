@@ -40,31 +40,7 @@ var DiceGame={
 	}
    }
  } // DiceGame
-
-var DiceView={
-	view: function() {
-		return m('div', [
-			m('div',{class:'subtitle'},"Just play here"),
-			m("input[type=text][placeholder=name]", {
-				value: DiceGame.name,
-				class: 'input is-rounded',
-				 oninput: function (e) {
-					 DiceGame.name=e.target.value},
-				 }),
-			m('div',{class:'level'},[
-			 m('label',{class:'level-item'},"turn:"+DiceGame.turn),
-			 m('label',{class:'level-item'},"score:"+DiceGame.score),
-			]),
-			m('label',{class:'label'},"Dice 1:"+DiceGame.d1),
-			m('label',{class:'label'},"Dice 2:"+DiceGame.d2),
-			m('button',{
-				class: 'button is-link',
-				onclick: function(e) {DiceGame.play()}
-			    },"play"),
-		])
-	}	
-}
-var myOwnTopScore = {
+ var myOwnTopScore = {
 	list: [],
 	    loadList: function() {
 	        return m.request({
@@ -90,6 +66,34 @@ var myOwnTopScore = {
 	    }
 	}
  
+
+var DiceView={
+	view: function() {
+		return m('div', [
+			m('div',{class:'subtitle'},"Just play here"),
+			m("input[type=text][placeholder=name]", {
+				value: DiceGame.name,
+				class: 'input is-rounded',
+				 oninput: function (e) {
+					 DiceGame.name=e.target.value
+					 myOwnTopScore.loadList()
+
+					},
+				 }),
+			m('div',{class:'level'},[
+			 m('label',{class:'level-item'},"turn:"+DiceGame.turn),
+			 m('label',{class:'level-item'},"score:"+DiceGame.score),
+			]),
+			m('label',{class:'label'},"Dice 1:"+DiceGame.d1),
+			m('label',{class:'label'},"Dice 2:"+DiceGame.d2),
+			m('button',{
+				class: 'button is-link',
+				onclick: function(e) {DiceGame.play()}
+			    },"play"),
+		])
+	}	
+}
+
 var Score = {
 	    list: [],
 	    loadList: function() {
