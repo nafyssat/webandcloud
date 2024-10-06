@@ -64,6 +64,31 @@ var DiceView={
 		])
 	}	
 }
+var myOwnTopScore = {
+	list: [],
+	    loadList: function() {
+	        return m.request({
+	            method: "GET",
+	            url: "_ah/api/myApi/v1/myscores/"+DiceGame.name
+	        })
+	        .then(function(result) {
+	            myOwnTopScore.list = result.items
+	        	console.log("got:",result.items)
+	        	m.redraw(true) 
+	        })
+	    },
+	    save: function(score,name) {
+	    	console.log("saving...",myOwnTopScore.current)
+	        return m.request({
+	            method: "GET",
+	            url: "_ah/api/myApi/v1/addScore/"+score+"/"+name
+	        })
+	        .then(function(result) {
+	        	console.log("got:",result)
+	        	myOwnTopScore.loadList()
+	        })
+	    }
+	}
  
 var Score = {
 	    list: [],
@@ -87,9 +112,11 @@ var Score = {
 	        .then(function(result) {
 	        	console.log("got:",result)
 	        	Score.loadList()
+				myOwnTopScore.loadList()
 	        })
 	    }
 	}
+
 
 var ScoreView = {
   oninit: Score.loadList,
@@ -108,6 +135,26 @@ var ScoreView = {
 	      ])
 	    })
 	   ])
+	 ])    
+  }
+}
+var MyScoreView = {
+  oninit: myOwnTopScore.loadList,
+  view: function() {
+   	return m('div', [
+	  m('div',{class:'subtitle'},"My Top 10 Scores"),
+	  m('table', {class:'table is-striped'},[
+	    m('tr', [
+	      m('th', {width:"20px"}, "Name"),
+	      m('th', {width:"50px"}, "Score"),
+	    ]),
+	    myOwnTopScore.list.map(function(item) {
+	      return m("tr", [
+  	        m('td', m('label', item.properties.name)),
+	        m('td', m('label', item.properties.score)),
+	      ])
+	    })
+	   ])
 	 ])
   }
 }
@@ -119,6 +166,8 @@ var Hello = {
            m('div',{class: 'tile is-ancestor'},[
                m("div", {class: 'tile'}, m('div',{class:'tile is-child box'},m(DiceView))),
                m("div", {class: 'tile'}, m('div',{class:'tile is-child box'},m(ScoreView))),
+			   m("div", {class: 'tile'}, m('div',{class:'tile is-child box'},m(MyScoreView))),
+
            ])
        ])
    }

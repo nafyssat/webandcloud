@@ -89,11 +89,12 @@ public class ScoreEndpoint {
 		return result;
 	}
 
+
 	@ApiMethod(name = "myscores", httpMethod = HttpMethod.GET)
 	public List<Entity> myscores(@Named("name") String name) {
-		Query q = new Query("Score").setFilter(new FilterPredicate("name", FilterOperator.EQUAL, name)).addSort("score",
-				SortDirection.DESCENDING);
-        //Query q = new Query("Score").setFilter(new FilterPredicate("name", FilterOperator.EQUAL, name));
+		// Query q = new Query("Score").setFilter(new FilterPredicate("name", FilterOperator.EQUAL, name)).addSort("score",
+		// 		SortDirection.DESCENDING);
+        Query q = new Query("Score").setFilter(new FilterPredicate("name", FilterOperator.EQUAL, name));
 
 		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		PreparedQuery pq = datastore.prepare(q);
@@ -113,6 +114,7 @@ public class ScoreEndpoint {
 
 		return e;
 	}
+
 
 
 	@ApiMethod(name = "addScoreSec", httpMethod = HttpMethod.GET)
