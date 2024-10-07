@@ -142,7 +142,7 @@ var ScoreView = {
 	 ])    
   }
 }
-var MyScoreView = {
+var MyOwnScoreView = {
   oninit: myOwnTopScore.loadList,
   view: function() {
    	return m('div', [
@@ -163,6 +163,8 @@ var MyScoreView = {
   }
 }
 
+
+
 var Hello = {
    view: function() {
    	return m('div', {class:'container'}, [
@@ -170,7 +172,7 @@ var Hello = {
            m('div',{class: 'tile is-ancestor'},[
                m("div", {class: 'tile'}, m('div',{class:'tile is-child box'},m(DiceView))),
                m("div", {class: 'tile'}, m('div',{class:'tile is-child box'},m(ScoreView))),
-			   m("div", {class: 'tile'}, m('div',{class:'tile is-child box'},m(MyScoreView))),
+			   m("div", {class: 'tile'}, m('div',{class:'tile is-child box'},m(MyOwnScoreView))),
 
            ])
        ])
